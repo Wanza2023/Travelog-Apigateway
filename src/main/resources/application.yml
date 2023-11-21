@@ -9,7 +9,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://172.16.210.130:8761/eureka/
+      defaultZone: http://172.16.210.131:8761/eureka/
 
 spring:
   application:
@@ -18,14 +18,18 @@ spring:
     gateway:
       routes:
         - id: members
-          uri: http://172.16.210.130:8081
+          uri: http://172.16.210.131:8081
           predicates:
-              - Path=/members/**
+            - Path=/members/**
+            - Path=/login
+            - Path=/signup
+            - Path=/bookmark/**
         - id: board
-          uri: http://172.16.210.130:8082
+          uri: http://172.16.210.131:8082
           predicates:
             - Path=/board/**
         - id: comments
-          uri: http://172.16.210.130:8083
+          uri: http://172.16.210.131:8083
           predicates:
             - Path=/comments/**
+
