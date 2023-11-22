@@ -3,7 +3,7 @@ server:
 
 eureka:
   instance:
-    instance-id: gateway-server-instance
+    instance-id: API-Gateway
     prefer-ip-address: true
   client:
     register-with-eureka: true
@@ -21,15 +21,26 @@ spring:
           uri: http://172.16.210.131:8081
           predicates:
             - Path=/members/**
-            - Path=/login
-            - Path=/signup
+          filters:
+            - RemoveRequestHeader=Cookie
+#            - RewritePath=/members/(?<segment>.*), /$\{segment}
+
+        - id: bookmarks
+          uri: http://172.16.210.131:8081
+          predicates:
             - Path=/bookmark/**
+
         - id: board
           uri: http://172.16.210.131:8082
           predicates:
             - Path=/board/**
+
         - id: comments
           uri: http://172.16.210.131:8083
           predicates:
             - Path=/comments/**
+
+logging:
+  level:
+    org.springframework.security: DEBUG
 
