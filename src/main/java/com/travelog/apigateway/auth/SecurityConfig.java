@@ -21,6 +21,7 @@ public class SecurityConfig {
         http
                 //REST API 이므로 필요 없는 설정 disable
                 .formLogin(formLogin -> formLogin.disable())
+                .logout(logout -> logout.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .csrf(csrf -> csrf.disable())
 
@@ -30,18 +31,16 @@ public class SecurityConfig {
                 //Session 사용 안 함
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
 
-                //뭐지
-                .logout(logout -> logout.disable())
-
                 //URL
                 .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll());
+
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "http://172.16.*", "http://10.0.*"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:*", "http://172.16.*", "http://10.0.*", "http://52.*", "http://kea-006*"));
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
